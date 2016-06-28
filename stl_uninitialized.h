@@ -1,7 +1,7 @@
 #ifndef __SGI_STL_INTERNAL_UNINITIALIZE_H
 #define __SGI_STL_INTERNAL_UNINITIALIZE_H
 
-__SGI_BEGIN_NAMESPACE
+__STL_BEGIN_NAMESPACE
 
 template <class InputIterator, class ForwardIterator>
 inline ForwardIterator
@@ -46,13 +46,6 @@ inline wchar_t* uninitialized_copy(const wchar_t* first, const wchar_t* last,
   return result + (last - first);
 }
 
-
-
-
-
-__SGI_END_NAMESPACE
-
-
-
+__STL_END_NAMESPACE
 
 #endif /* __SGI_STL_INTERNAL_UNINITIALIZE_H */

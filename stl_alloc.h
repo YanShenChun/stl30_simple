@@ -17,6 +17,7 @@
 
 __STL_BEGIN_NAMESPACE
 
+template <int inst>
 class __malloc_alloc_template {
 private:
   static void* oom_malloc(size_t);
@@ -133,7 +134,7 @@ private:
 
 public:
   static void* allocate(size_t n) {
-    obj* my_free_list;
+    obj** my_free_list;
     obj* result;
 
     if (n > (size_t)__MAX_BYTES) {
@@ -243,7 +244,7 @@ void* __default_alloc_template<threads, inst>::refill(size_t n) {
     current_obj = next_obj;
     next_obj = (obj*)((char*)next_obj + n);
 
-    if (nobjs - 1 == 1) {
+    if (nobjs - 1 == i) {
       current_obj->free_list_link = 0;
       break;
     } else {
@@ -280,11 +281,11 @@ template <bool threads, int inst>
 char* __default_alloc_template<threads, inst>::end_free = 0;
 
 template <bool threads, int inst>
-char* __default_alloc_template<threads, inst>::heap_size = 0;
+size_t __default_alloc_template<threads, inst>::heap_size = 0;
 
 template <bool threads, int inst>
-typename __default_alloc_template<threads, inst>::obj** 
-default_alloc_template<threads, inst>::free_list[__default_alloc_template<threads, inst>::__NFREELISTS]
+typename __default_alloc_template<threads, inst>::obj*
+ __default_alloc_template<threads, inst>::free_list[__default_alloc_template<threads, inst>::__NFREELISTS]
  = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,};
 
 __STL_END_NAMESPACE

@@ -86,7 +86,7 @@ iterator_category(const Iterator&) {
 template <class Iterator>
 inline typename iterator_traits<Iterator>::difference_type*
 distance_type(const Iterator&) {
-  return static_cast<typename iterator_category<Iterator>::difference_type*>(0);
+  return static_cast<typename iterator_traits<Iterator>::difference_type*>(0);
 }
 
 template <class Iterator>
@@ -95,40 +95,6 @@ value_type(const Iterator&) {
   return static_cast<typename iterator_traits<Iterator>::value_type*>(0);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-__STL_END_NAMESPACE&
+__STL_END_NAMESPACE
 
 #endif /* __SGI_STL_INTERNAL_ITERATOR_H */

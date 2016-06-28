@@ -7,7 +7,8 @@ struct __true_type {
 struct __false_type {
 };
 
-template <class type> {
+template <class type> 
+struct __type_traits {
   typedef __true_type this_dummy_member_must_be_first;
 
   typedef __false_type has_trival_default_constructor;

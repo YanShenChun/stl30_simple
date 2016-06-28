@@ -2,19 +2,19 @@
 #define __SGI_STL_INTERNAL_ALGOBASE_H
 
 #ifndef __STL_CONFIG_H
-#include "stl_config.h"
+#include <stl_config.h>
 #endif
 
 #ifndef __SGI_STL_INTERNAL_RELOPS
-#include "stl_relops.h"
+#include <stl_relops.h>
 #endif
 
 #ifndef __SGI_STL_INTERNAL_PAIR_H
-#include "stl_pair.h"
+#include <stl_pair.h>
 #endif
 
 #ifndef __TYPE_TRAITS_H
-#include "type_traits.h"
+#include <type_traits.h>
 #endif
 
 #include <string.h>
@@ -25,10 +25,10 @@
 #include <iostream>
 
 #ifndef __SGI_STL_INTERNAL_ITERATOR_H
-#include "stl_iterator.h"
+#include <stl_iterator.h>
 #endif
 
-__SGI_BEGIN_NAMESPACE
+__STL_BEGIN_NAMESPACE
 
 template <class ForwardIterator1, class ForwardIterator2, class T>
 inline void __iter_swap(ForwardIterator1 a, ForwardIterator2 b, T*) {
@@ -83,7 +83,7 @@ inline OutputIterator __copy(InputIterator first, InputIterator last,
 
 template <class RandomAccessIterator, class OutputIterator, class Distance>
 inline OutputIterator
-__copy_d(RandomAccessIterator first, RandomAccessIterator last
+__copy_d(RandomAccessIterator first, RandomAccessIterator last,
          OutputIterator result, Distance*) {
   for (Distance n = last - first; n > 0; --n, ++result, ++first)
     *result = *first;
@@ -118,7 +118,7 @@ inline T* __copy_t(const T* first, const T* last, T* result, __false_type) {
 }
 
 template <class T>
-struct __copy_dispatch(T*, T*) {
+struct __copy_dispatch<T*, T*> {
   T* operator()(T* first, T* last, T* result) {
     typedef typename __type_traits<T>::has_trivial_assignment_operator t;
     return __copy_t(first, last, result, t());
@@ -126,7 +126,7 @@ struct __copy_dispatch(T*, T*) {
 };
 
 template <class T>
-struct __copy_dispatch(const T*, T*) {
+struct __copy_dispatch<const T*, T*> {
   T* operator()(const T* first, const T* last, T* result) {
     typedef typename __type_traits<T>::has_trivial_assignment_operator t;
     return __copy_t(first, last, result, t());
@@ -140,33 +140,6 @@ inline OutputIterator copy(InputIterator first, InputIterator last,
   return __copy_dispatch<InputIterator, OutputIterator>()(first, last, result);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-__SGI_END_NAMESPACE
+__STL_END_NAMESPACE
 
 #endif /* __SGI_STL_INTERNAL_ALGOBASE_H */
