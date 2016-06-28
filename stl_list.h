@@ -37,7 +37,7 @@ struct __list_iterator {
   pointer operator->() const { return &(operator*()); }
 
   self& operator++() {
-    node == (link_type)((*node).next);
+    node = (link_type)((*node).next);
     return *this;
   }
 
@@ -122,6 +122,33 @@ public:
   iterator end() { return node; }
 
   bool empty() const { return node->next == node; }
+
+  iterator insert(iterator position, const T& x) {
+    link_type tmp = create_node(x);
+    tmp->next = position.node;
+    tmp->prev = position.node->prev;
+    (link_type(position.node->prev))->next = tmp;
+    position.node->prev = tmp;
+    return tmp;
+  }
+
+  void push_front(const T& x) { insert(begin(), x); }
+  void push_back(const T& x) { insert(end(), x); }
+
+  iterator erase(iterator position) {
+    link_type next_node = link_type(position.node->next);
+    link_type prev_node = link_type(position.node->prev);
+    prev_node->next = next_node;
+    next_node->prev = prev_node;
+    destory_node(position.node);
+    return iterator(next_node);
+  }
+
+  void pop_front() { erase(begin()); }
+  void pop_back() {
+    iterator tmp = end();
+    erase(--tmp);
+  }
 
   void clear();
 };

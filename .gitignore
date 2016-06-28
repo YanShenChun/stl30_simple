@@ -31,3 +31,6 @@
 
 # vi swap files
 *.swp
+
+# debug directory
+[Dd]ebug
