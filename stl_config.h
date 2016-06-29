@@ -14,9 +14,4 @@
 #define __STL_NOTHROW throw()
 #define __STL_UNWIND(action) catch(...) { action; throw; }
 
-#include <stdio.h>
-#define __stl_assert(expr) \
-  if ((!expr)) { fprintf(stderr, "%s:%d STL assertion failure: %s\n", \
-      __FILE__, __LINE__, # expr, ); abort(); }
-
 #endif /* __STL_CONFIG_H */

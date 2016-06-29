@@ -5,13 +5,6 @@
 #include <stl_config.h>
 #endif
 
-#include <string.h>
-#include <limits.h>
-#include <stdlib.h>
-#include <stddef.h>
-#include <new>
-#include <iostream>
-
 #ifndef __SGI_STL_INTERNAL_ITERATOR_H
 #include <stl_iterator.h>
 #endif
