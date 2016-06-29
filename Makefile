@@ -1,8 +1,7 @@
 EXEC=test
 OUTPUT=debug
 SGI_HEADERS=list stl_algobase.h stl_alloc.h stl_config.h \
-						stl_construct.h stl_iterator.h stl_list.h \
-						type_traits.h
+						stl_construct.h stl_iterator.h stl_list.h
 
 all: $(OUTPUT) $(EXEC)
 

@@ -14,7 +14,6 @@ struct __list_node {
 template <class T, class Ref, class Ptr>
 struct __list_iterator {
   typedef __list_iterator<T, T&, T*>             iterator;
-  typedef __list_iterator<T, const T&, const T*> const_iterator;
   typedef __list_iterator<T, Ref, Ptr>           self;
 
   typedef bidirectional_iterator_tag iterator_category;
