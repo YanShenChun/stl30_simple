@@ -140,6 +140,15 @@ inline OutputIterator copy(InputIterator first, InputIterator last,
   return __copy_dispatch<InputIterator, OutputIterator>()(first, last, result);
 }
 
+template <class OutputIterator, class Size, class T>
+OutputIterator fill_n(OutputIterator first, Size n, const T& value) {
+  for (; n > 0; --n, ++first)
+    *first = value;
+
+  return first;
+}
+
+
 __STL_END_NAMESPACE
 
 #endif /* __SGI_STL_INTERNAL_ALGOBASE_H */
