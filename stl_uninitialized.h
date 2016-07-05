@@ -31,7 +31,13 @@ __uninitialize_copy(InputIterator first, InputIterator last,
                     ForwardIterator result, T*) {
   typedef typename __type_traits<T>::is_POD_type is_POD;
   return __uninitialize_copy_aux(first, last, result, is_POD());
+}
 
+template <class InputIterator, class ForwardIterator>
+inline ForwardIterator
+uninitialized_copy(InputIterator first, InputIterator last,
+                   ForwardIterator result) {
+  return __uninitialize_copy(first, last, result, value_type(result));
 }
 
 inline char* uninitialized_copy(const char* first, const char* last,

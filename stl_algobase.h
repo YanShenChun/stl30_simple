@@ -120,7 +120,7 @@ inline T* __copy_t(const T* first, const T* last, T* result, __false_type) {
 template <class T>
 struct __copy_dispatch<T*, T*> {
   T* operator()(T* first, T* last, T* result) {
-    typedef typename __type_traits<T>::has_trivial_assignment_operator t;
+    typedef typename __type_traits<T>::has_trival_assignment_operator t;
     return __copy_t(first, last, result, t());
   }
 };
@@ -128,7 +128,7 @@ struct __copy_dispatch<T*, T*> {
 template <class T>
 struct __copy_dispatch<const T*, T*> {
   T* operator()(const T* first, const T* last, T* result) {
-    typedef typename __type_traits<T>::has_trivial_assignment_operator t;
+    typedef typename __type_traits<T>::has_trival_assignment_operator t;
     return __copy_t(first, last, result, t());
   }
 };
@@ -138,6 +138,61 @@ template <class InputIterator, class OutputIterator>
 inline OutputIterator copy(InputIterator first, InputIterator last,
                            OutputIterator result) {
   return __copy_dispatch<InputIterator, OutputIterator>()(first, last, result);
+}
+
+template <class BidirectionalIterator1, class BidirectionalIterator2>
+inline BidirectionalIterator2 __copy_backward(BidirectionalIterator1 first,
+                                              BidirectionalIterator1 last,
+                                              BidirectionalIterator2 result) {
+  while (first != last) *--result = *--last;
+  return result;
+}
+
+template <class BidirectionalIterator1, class BidirectionalIterator2>
+struct __copy_backward_dispatch {
+  BidirectionalIterator2 operator()(BidirectionalIterator1 first,
+                                    BidirectionalIterator1 last,
+                                    BidirectionalIterator2 result) {
+    return __copy_backward(first, last, result);
+  }
+};
+
+template <class T>
+inline T* __copy_backward_t(const T* first, const T* last, T* result,
+                            __true_type) {
+  const ptrdiff_t N = last - first;
+  memmove(result - N, first, sizeof(T) * N);
+  return result - N;
+}
+
+template <class T>
+inline T* __copy_backward_t(const T* first, const T* last, T* result,
+                            __false_type) {
+  return __copy_backward(first, last, result);
+}
+
+template <class T>
+struct __copy_backward_dispatch<T*, T*> {
+  T* operator()(T* first, T* last, T* result) {
+    typedef typename __type_traits<T>::has_trival_assignment_operator t;
+    return __copy_backward_t(first, last, result, t());
+  }
+};
+
+template <class T>
+struct __copy_backward_dispatch<const T*, T*> {
+  T* operator()(const T* first, const T* last, T* result) {
+    typedef typename __type_traits<T>::has_trival_assignment_operator t;
+    return __copy_backward_t(first, last, result, t());
+  }
+};
+
+template <class BidirectionalIterator1, class BidirectionalIterator2>
+inline BidirectionalIterator2 copy_backward(BidirectionalIterator1 first,
+                                            BidirectionalIterator1 last,
+                                            BidirectionalIterator2 result) {
+  return __copy_backward_dispatch<BidirectionalIterator1,
+                                  BidirectionalIterator2>()(first, last, result);
 }
 
 template <class OutputIterator, class Size, class T>

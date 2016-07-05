@@ -95,6 +95,80 @@ value_type(const Iterator&) {
   return static_cast<typename iterator_traits<Iterator>::value_type*>(0);
 }
 
+template <class InputIterator, class Distance>
+inline void __distance(InputIterator first, InputIterator last, Distance& n,
+                       input_iterator_tag) {
+  while (first != last) { ++first; ++n; };
+}
+
+template <class RandomAccessIterator, class Distance>
+inline void __distance(RandomAccessIterator first, RandomAccessIterator last,
+                       Distance& n, random_access_iterator_tag) {
+  n += last - first;
+}
+
+template <class InputIterator, class Distance>
+inline void distance(InputIterator first, InputIterator last, Distance& n) {
+  __distance(first, last, n, iterator_category(first));
+}
+
+template <class Iterator>
+class reverse_iterator {
+protected:
+  Iterator current;
+
+public:
+  typedef typename iterator_traits<Iterator>::iterator_category iterator_category;
+  typedef typename iterator_traits<Iterator>::value_type value_type;
+  typedef typename iterator_traits<Iterator>::difference_type difference_type;
+  typedef typename iterator_traits<Iterator>::pointer pointer;
+  typedef typename iterator_traits<Iterator>::reference reference;
+
+  typedef Iterator iterator_type;
+  typedef reverse_iterator<Iterator> self;
+
+public:
+  reverse_iterator() {}
+  explicit reverse_iterator(iterator_type x) : current(x) {}
+  reverse_iterator(const self& x) : current(x.current) {}
+
+  iterator_type base() const { return current; }
+  reference operator*() const {
+    Iterator tmp = current;
+    return *--tmp;
+  }
+
+  pointer operator->() const { return &(operator*()); }
+
+  self& operator++() {
+    --current;
+    return *this;
+  }
+
+  self operator++(int) {
+    self tmp = *this;
+    --current;
+    return tmp;
+  }
+
+  self& operator--() {
+    ++current;
+    return *this;
+  }
+
+  self operator--(int) {
+    self tmp = *this;
+    ++current;
+    return tmp;
+  }
+
+  self operator+(difference_type n) const {
+    return self(current - n);
+  }
+
+
+};
+
 __STL_END_NAMESPACE
 
 #endif /* __SGI_STL_INTERNAL_ITERATOR_H */

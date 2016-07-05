@@ -6,7 +6,7 @@
 __STL_BEGIN_NAMESPACE
 
 template <class T>
-inline void destory(T* pointer) {
+inline void destroy(T* pointer) {
   pointer->~T();
 }
 
@@ -17,28 +17,27 @@ inline void construct(T1* p, const T2& value) {
 
 template <class ForwardIterator>
 inline void
-__destory_aux(ForwardIterator first, ForwardIterator last, __false_type) {
-  for (; first < last; ++first) {
-    destory(&*first);
-  }
+__destroy_aux(ForwardIterator first, ForwardIterator last, __false_type) {
+  for (; first < last; ++first)
+    destroy(&*first);
 }
 
 template <class ForwardIterator>
-inline void __destory_aux(ForwardIterator, ForwardIterator, __true_type) {}
+inline void __destroy_aux(ForwardIterator, ForwardIterator, __true_type) {}
 
 template <class ForwardIterator, class T>
-inline void __destory(ForwardIterator first, ForwardIterator last, T*) {
-  typedef typename __type_traits<T>::has_trivial_destructor trival_destructor;
-  __destory_aux(first, last, trival_destructor());
+inline void __destroy(ForwardIterator first, ForwardIterator last, T*) {
+  typedef typename __type_traits<T>::has_trival_destructor trival_destructor;
+  __destroy_aux(first, last, trival_destructor());
 }
 
 template <class ForwardIterator>
-inline void destory(ForwardIterator first, ForwardIterator last) {
-  __destory(first, last, value_type(first));
+inline void destroy(ForwardIterator first, ForwardIterator last) {
+  __destroy(first, last, value_type(first));
 }
 
-inline void destory(char*, char*) {}
-inline void destory(wchar_t*, wchar_t*) {}
+inline void destroy(char*, char*) {}
+inline void destroy(wchar_t*, wchar_t*) {}
 
 __STL_END_NAMESPACE
 

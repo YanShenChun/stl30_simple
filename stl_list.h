@@ -92,8 +92,8 @@ protected:
     return p;
   }
 
-  void destory_node(link_type p) {
-    destory(&p->data);
+  void destroy_node(link_type p) {
+    destroy(&p->data);
     put_node(p);
   }
 
@@ -140,7 +140,7 @@ public:
     link_type prev_node = link_type(position.node->prev);
     prev_node->next = next_node;
     next_node->prev = prev_node;
-    destory_node(position.node);
+    destroy_node(position.node);
     return iterator(next_node);
   }
 
@@ -159,7 +159,7 @@ void list<T, Alloc>::clear() {
   while (cur != node) {
     link_type tmp = cur;
     cur = (link_type)cur->next;
-    destory_node(tmp);
+    destroy_node(tmp);
   }
 
   node->next = node;
