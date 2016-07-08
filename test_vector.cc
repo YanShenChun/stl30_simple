@@ -1,6 +1,16 @@
 #include <iostream>
 #include <vector>
 
+
+void PrintVector(_std::vector<int>& xx) {
+  std::cout << "begin:" << xx.begin()
+            << ",end:" << xx.end() 
+            << ",size:" << xx.size()
+            << ",capacity:" << xx.capacity() 
+            << std::endl;
+}
+
+
 int main() {
   std::cout << "testing the sgi stl vector container .." << std::endl;
   _std::vector<int> xx;
@@ -17,6 +27,7 @@ int main() {
   }
   std::cout << std::endl;
 
+  PrintVector(xx);
   //std::cout << "  ---- test list<int>.empty()" << std::endl;
   //std::cout << xx.empty() << std::endl;
 
