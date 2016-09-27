@@ -1,5 +1,6 @@
 #include <iostream>
 #include <list>
+#include <string>
 
 int main() {
   std::cout << "testing the sgi stl list container .." << std::endl;

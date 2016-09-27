@@ -70,7 +70,7 @@ __uninitialized_fill_n_aux(ForwardIterator first, Size n,
       construct(&*cur, x);
     return cur;
   }
-  __STL_UNWIND();
+	__STL_UNWIND(;);
 }
 
 template <class ForwardIterator, class Size, class T, class T1>
